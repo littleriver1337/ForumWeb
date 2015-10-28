@@ -9,7 +9,7 @@ public class Message {
     String username;
     String text;
 
-    public Message(String text, int id, int replyId, String username) {
+    public Message(int id, int replyId, String username, String text) {
         this.id = id;
         this.replyId = replyId;
         this.username = username;
