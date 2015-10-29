@@ -36,6 +36,30 @@ public class Main {
                 }),
                 new MustacheTemplateEngine()
         );
+        Spark.get(
+                "/replies",
+                ((request, response) -> {
+                    HashMap m = new HashMap(); // step 1
+                    String id = request.queryParams("id");
+                    try {
+                        int idNum = Integer.valueOf(id);
+                        Message message = messages.get(idNum);
+                        m.put("message", message);
+
+                        ArrayList<Message> replies = new ArrayList();
+                        for (Message msg : messages){
+                            if(msg.replyId == message.id){
+                                replies.add(msg);
+                            }
+                        }
+                        m.put("replies", replies);
+                    } catch (Exception e){
+
+                    }
+                    return new ModelAndView(m, "replies.html");// step 2
+                }),
+                new MustacheTemplateEngine()//step 3
+        );
         Spark.post(
                 "/login",
                 ((request, response) -> {
